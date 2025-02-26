@@ -42,7 +42,10 @@ export class RankingService {
   }
   
   async delete(id: string): Promise<void> {
-    await this.rankingModel.findByIdAndDelete(id).exec();
+    const result = await this.rankingModel.findByIdAndDelete(id).exec();
+    if (!result) {
+      throw new NotFoundException(`Ranking not found with id ${id}`);
+    }  
     return;
   }
 }
